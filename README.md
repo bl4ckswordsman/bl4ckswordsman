@@ -1,4 +1,6 @@
-### Hi there 👋
+<!--Started counting September 18th 2023 -->
+[![Visits Badge](https://badges.pufler.dev/visits/bl4ckswordsman/bl4ckswordsman)](https://github.com/bl4ckswordsman)
+
 
 <!--
 **bl4ckswordsman/bl4ckswordsman** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
