@@ -1,6 +1,6 @@
 <!--Started counting September 18th 2023 -->
 [![Visits Badge](https://badges.pufler.dev/visits/bl4ckswordsman/bl4ckswordsman)](https://github.com/bl4ckswordsman)
-
+<a href='revolut.me/ight' target="_blank"><img alt='Revolut' src='https://img.shields.io/badge/Donate-100000?style=flat&logo=Revolut&logoColor=FFFFFF&labelColor=2c1385&color=black'/></a>
 
 <!--
 **bl4ckswordsman/bl4ckswordsman** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
