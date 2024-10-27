@@ -29,7 +29,7 @@ jobs:
           # Options
           user: bl4ckswordsman
           template: classic
-          base: header, activity, community, repositories, metadata
+          base: header, activity, repositories, metadata
           config_octicon: yes
           config_timezone: Europe/Stockholm
           plugin_languages: yes
@@ -37,7 +37,7 @@ jobs:
           plugin_languages_analysis_timeout_repositories: 7.5
           plugin_languages_categories: markup, programming
           plugin_languages_colors: github
-          plugin_languages_limit: 8
+          plugin_languages_limit: 10
           plugin_languages_recent_categories: markup, programming
           plugin_languages_recent_days: 14
           plugin_languages_recent_load: 300
@@ -51,7 +51,4 @@ jobs:
           plugin_notable_from: all
           plugin_notable_repositories: yes
           plugin_notable_types: commit
-          plugin_sponsorships: no
-          plugin_sponsorships_sections: amount, sponsorships
-          plugin_sponsorships_size: 24
           repositories_forks: yes
