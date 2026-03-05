@@ -33,8 +33,9 @@ jobs:
           config_octicon: yes
           config_timezone: Europe/Stockholm
           extras_js: |
-            // Hide specific activity rows
-            const hide = [
+            console.log("text count:", document.querySelectorAll("text").length);
+            console.log("svg count:", document.querySelectorAll("svg").length);
+            const labelsToHide = [
               "Pull requests reviewed",
               "Pull requests opened",
               "Issues opened",
@@ -43,17 +44,24 @@ jobs:
               "Watchers",
               "Sponsors"
             ];
-            document.querySelectorAll("td, th, .field, .value, text").forEach(el => {
-              const t = el.textContent?.trim() ?? "";
-              if (hide.some(h => t === h) || /^Prefers .+ license$/.test(t)) {
-                let node = el;
-                // Walk up a few levels to find the full row container
-                for (let i = 0; i < 6; i++) {
-                  if (node?.parentElement) node = node.parentElement;
-                  if (node?.tagName === "tr" || node?.classList?.contains("row")) break;
+
+            document.querySelectorAll("text").forEach(el => {
+              const content = el.textContent.trim();
+              const match = labelsToHide.includes(content) || /^Prefers .+ license$/.test(content);
+              if (!match) return;
+
+              // Walk up the SVG tree to find the <g> row container
+              // Stop before reaching the root <svg> element
+              let node = el.parentElement;
+              while (node && node.tagName.toLowerCase() !== "svg") {
+                const parent = node.parentElement;
+                if (parent && parent.tagName.toLowerCase() !== "svg") {
+                  node = parent;
+                } else {
+                  break;
                 }
-                if (node) node.style.display = "none";
               }
+              if (node) node.remove();
             });
 
           plugin_languages: yes
