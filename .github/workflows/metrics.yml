@@ -52,6 +52,7 @@ jobs:
 
               // Remove ONLY the immediate parent <g> = one row, not the whole section
               const parent = el.parentElement;
+              console.log(parent?.outerHTML?.slice(0, 200))
               if (parent) parent.remove();
             });
 
