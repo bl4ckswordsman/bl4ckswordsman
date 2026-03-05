@@ -37,23 +37,18 @@ jobs:
               "Pull requests reviewed",
               "Pull requests opened",
               "Issues opened",
-              "Issue comments",
+              "issue comments",
               "Releases",
               "Watchers",
-              "Sponsors",
+              "Sponsors"
             ];
 
-            document.querySelectorAll("text").forEach(el => {
-              const content = el.textContent.trim();
-              const match =
-                labelsToHide.some(label => content.includes(label)) ||
-                /Prefers .+ license/.test(content);
-              if (!match) return;
-
-              // Remove ONLY the immediate parent <g> = one row, not the whole section
-              const parent = el.parentElement;
-              console.log(parent?.outerHTML?.slice(0, 200))
-              if (parent) parent.remove();
+            document.querySelectorAll("div.field").forEach(el => {
+              const text = el.textContent.trim();
+              const shouldRemove =
+                labelsToHide.some(label => text.includes(label)) ||
+                /Prefers .+ license/.test(text);
+              if (shouldRemove) el.remove();
             });
 
           plugin_languages: yes
