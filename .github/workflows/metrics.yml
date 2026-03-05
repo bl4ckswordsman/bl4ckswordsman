@@ -38,7 +38,7 @@ jobs:
             .activity-event-pr,
             .activity-event-issue,
             .activity-event-comment { display: none !important; }
-            
+
             /* ── Repositories: hide license, releases, watchers, sponsors ── */
             .repositories-license,
             .repositories-releases,
