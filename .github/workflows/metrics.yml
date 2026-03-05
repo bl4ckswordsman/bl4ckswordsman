@@ -33,35 +33,42 @@ jobs:
           config_octicon: yes
           config_timezone: Europe/Stockholm
           extras_js: |
-            console.log("text count:", document.querySelectorAll("text").length);
-            console.log("svg count:", document.querySelectorAll("svg").length);
-            const labelsToHide = [
-              "Pull requests reviewed",
-              "Pull requests opened",
-              "Issues opened",
-              "Issue comments",
-              "Releases",
-              "Watchers",
-              "Sponsors"
+            const activityKeywords = [
+              "pull request reviewed",
+              "pull requests reviewed",
+              "pull request opened",
+              "pull requests opened",
+              "issue opened",
+              "issues opened",
+              "issue comment",
+              "issue comments"
             ];
 
-            document.querySelectorAll("text").forEach(el => {
-              const content = el.textContent.trim();
-              const match = labelsToHide.includes(content) || /^Prefers .+ license$/.test(content);
-              if (!match) return;
+            const repoLabels = ["Releases", "Watchers", "Sponsors"];
 
-              // Walk up the SVG tree to find the <g> row container
-              // Stop before reaching the root <svg> element
-              let node = el.parentElement;
-              while (node && node.tagName.toLowerCase() !== "svg") {
-                const parent = node.parentElement;
-                if (parent && parent.tagName.toLowerCase() !== "svg") {
-                  node = parent;
-                } else {
-                  break;
-                }
+            document.querySelectorAll("text").forEach(el => {
+              const text = el.textContent.trim();
+              const lower = text.toLowerCase();
+
+              const isActivity = activityKeywords.some(k => lower.includes(k));
+              const isRepo = repoLabels.includes(text) || /^prefers .+ license$/i.test(lower);
+
+              if (!isActivity && !isRepo) return;
+
+              // Walk up max 2 levels — stop before hitting a section container
+              let target = el.parentElement;
+              if (!target) return;
+
+              const grandparent = target.parentElement;
+              if (
+                grandparent &&
+                grandparent.tagName.toLowerCase() !== "svg" &&
+                grandparent.children.length <= 4   // row-level group, not a section group
+              ) {
+                target = grandparent;
               }
-              if (node) node.remove();
+
+              target.remove();
             });
 
           plugin_languages: yes
