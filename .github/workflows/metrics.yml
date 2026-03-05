@@ -32,18 +32,30 @@ jobs:
           base: header, activity, repositories, metadata
           config_octicon: yes
           config_timezone: Europe/Stockholm
-          extras_css: |
-            /* ── Activity: hide PR reviewed, PR opened, issues opened, issue comments ── */
-            .activity-event-review,
-            .activity-event-pr,
-            .activity-event-issue,
-            .activity-event-comment { display: none !important; }
+          extras_js: |
+            // Hide specific activity rows
+            const hide = [
+              "Pull requests reviewed",
+              "Pull requests opened",
+              "Issues opened",
+              "Issue comments",
+              "Releases",
+              "Watchers",
+              "Sponsors"
+            ];
+            document.querySelectorAll("td, th, .field, .value, text").forEach(el => {
+              const t = el.textContent?.trim() ?? "";
+              if (hide.some(h => t === h) || /^Prefers .+ license$/.test(t)) {
+                let node = el;
+                // Walk up a few levels to find the full row container
+                for (let i = 0; i < 6; i++) {
+                  if (node?.parentElement) node = node.parentElement;
+                  if (node?.tagName === "tr" || node?.classList?.contains("row")) break;
+                }
+                if (node) node.style.display = "none";
+              }
+            });
 
-            /* ── Repositories: hide license, releases, watchers, sponsors ── */
-            .repositories-license,
-            .repositories-releases,
-            .repositories-watchers,
-            .repositories-sponsors { display: none !important; }
           plugin_languages: yes
           plugin_languages_ignored: html, cmake
           plugin_languages_analysis_timeout: 15
