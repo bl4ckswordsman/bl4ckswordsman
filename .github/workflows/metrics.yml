@@ -43,19 +43,18 @@ jobs:
               "issue comment",
               "issue comments"
             ];
-
-            const repoLabels = ["Releases", "Watchers", "Sponsors"];
+            const repoExact = ["Releases", "Watchers", "Sponsors"];
 
             document.querySelectorAll("text").forEach(el => {
               const text = el.textContent.trim();
               const lower = text.toLowerCase();
 
               const isActivity = activityKeywords.some(k => lower.includes(k));
-              const isRepo = repoLabels.includes(text) || /^prefers .+ license$/i.test(lower);
-
+              const isRepo = repoExact.includes(text) || /^prefers .+ license$/i.test(lower);
               if (!isActivity && !isRepo) return;
 
-              // Walk up max 2 levels — stop before hitting a section container
+              // Walk up max 2 levels; stop if grandparent has many children
+              // (that would mean it's a section container, not a row container)
               let target = el.parentElement;
               if (!target) return;
 
@@ -63,7 +62,7 @@ jobs:
               if (
                 grandparent &&
                 grandparent.tagName.toLowerCase() !== "svg" &&
-                grandparent.children.length <= 4   // row-level group, not a section group
+                grandparent.children.length <= 4
               ) {
                 target = grandparent;
               }
