@@ -33,41 +33,26 @@ jobs:
           config_octicon: yes
           config_timezone: Europe/Stockholm
           extras_js: |
-            const activityKeywords = [
-              "pull request reviewed",
-              "pull requests reviewed",
-              "pull request opened",
-              "pull requests opened",
-              "issue opened",
-              "issues opened",
-              "issue comment",
-              "issue comments"
+            const labelsToHide = [
+              "Pull requests reviewed",
+              "Pull requests opened",
+              "Issues opened",
+              "Issue comments",
+              "Releases",
+              "Watchers",
+              "Sponsors",
             ];
-            const repoExact = ["Releases", "Watchers", "Sponsors"];
 
             document.querySelectorAll("text").forEach(el => {
-              const text = el.textContent.trim();
-              const lower = text.toLowerCase();
+              const content = el.textContent.trim();
+              const match =
+                labelsToHide.some(label => content.includes(label)) ||
+                /Prefers .+ license/.test(content);
+              if (!match) return;
 
-              const isActivity = activityKeywords.some(k => lower.includes(k));
-              const isRepo = repoExact.includes(text) || /^prefers .+ license$/i.test(lower);
-              if (!isActivity && !isRepo) return;
-
-              // Walk up max 2 levels; stop if grandparent has many children
-              // (that would mean it's a section container, not a row container)
-              let target = el.parentElement;
-              if (!target) return;
-
-              const grandparent = target.parentElement;
-              if (
-                grandparent &&
-                grandparent.tagName.toLowerCase() !== "svg" &&
-                grandparent.children.length <= 4
-              ) {
-                target = grandparent;
-              }
-
-              target.remove();
+              // Remove ONLY the immediate parent <g> = one row, not the whole section
+              const parent = el.parentElement;
+              if (parent) parent.remove();
             });
 
           plugin_languages: yes
