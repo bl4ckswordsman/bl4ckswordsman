@@ -15,11 +15,12 @@
 
 ### Certifications
 <a href="https://www.credly.com/badges/e45e6a0b-e3dc-4fc7-96aa-8c57ecbc7f8e/public_url">
-  <img src="/badges/github-foundations.png" alt="GitHub Foundations" width="50">
+  <img src="/badges/github-foundations.png" alt="GitHub Foundations" width="60">
 </a>
 
+
 <a href="https://www.credly.com/badges/8c48b660-decb-4a88-a3ce-350a11920980">
-  <img src="/badges/LFS101.png" alt="LFS101: Introduction to Linuxs" width="50">
+  <img src="/badges/LFS101.png" alt="LFS101: Introduction to Linuxs" width="60">
 </a>
 
 ---
